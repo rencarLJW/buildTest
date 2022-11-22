@@ -67,7 +67,7 @@ jobs:
         run: echo "y" | sudo /usr/local/lib/android/sdk/tools/bin/sdkmanager --install "ndk;20.0.5594570" --sdk_root=${ANDROID_SDK_ROOT}
 
       - name: Create Release KeyStore File
-        run: cd app | echo "$" | base64 -di > key | echo $PWD 
+        run: echo "$" | base64 -di > key.jks
         
       - name: Make gradlew executable
         run: chmod +x ./gradlew

@@ -68,7 +68,7 @@ jobs:
 
       - name: Create Release KeyStore File
         run: echo "$" | base64 -di > key
-             pwd 
+             echo $PWD 
         
       - name: Make gradlew executable
         run: chmod +x ./gradlew

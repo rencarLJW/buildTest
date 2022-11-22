@@ -72,6 +72,10 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
   
+      - name: Set signingReport
+        run:
+          ./gradlew signingReport
+
       - name: Build with Gradle
         run:
           ./gradlew clean assembleRelease

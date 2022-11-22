@@ -82,7 +82,7 @@ jobs:
 
       - name: echo
         run:
-          echo -e "`ls -al`\n"
+          cd ./app/release | echo -e "`ls -al`\n"
           
       - name: Copy files to S3 with the AWS CLI
         run:

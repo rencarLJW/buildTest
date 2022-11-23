@@ -18,6 +18,6 @@ jobs:
       - name: Extract commit message
         shell: bash
         run: |
-          export VERSION_INFO=$(echo ${{ github.event.head_commit.message }} | rev | cut -d ' ' -f1)
+          export VERSION_INFO=$(echo ${{ github.event.head_commit.message }} | rev | cut -d ' ' -f1 | rev)
           echo "VERSION_INFO=$VERSION_INFO" >> $GITHUB_ENV
           echo $VERSION_INFO

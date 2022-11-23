@@ -18,5 +18,5 @@ jobs:
       - name: Extract commit message
         shell: bash
         run: |
-          export BRANCH_RAW=$(echo ${{ github.event.head_commit.message }})
-          echo "BRANCH_RAW=$BRANCH_RAW" >> $GITHUB_ENV
+          export VERSION_INFO=$(echo ${{ github.event.head_commit.message }} | rev | cut -d ' ' -f1)
+          echo "VERSION_INFO=$VERSION_INFO" >> $GITHUB_ENV

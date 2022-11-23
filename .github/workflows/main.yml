@@ -16,12 +16,11 @@ jobs:
       VERSION_CODE: 29
 
       S3_BUCKET_URL: "s3://buildtest-1122"
-      S3_URL: "https://buildtest-1122.s3.ap-northeast-2.amazonaws.com"
 
     steps:
       - name: set APK name
         run: |
-          export TEMP_APK_NAME="caro_version_$VERSION_NAME_$VERSION_CODE.apk"
+          export TEMP_APK_NAME="caro_version_${VERSION_NAME}_${VERSION_CODE}.apk"
           echo "APK_NAME=$TEMP_APK_NAME" >> $GITHUB_ENV
       - uses: actions/checkout@v2
 

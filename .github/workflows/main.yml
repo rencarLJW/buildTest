@@ -12,8 +12,8 @@ jobs:
       KEY_ALIAS: $
       KEYSTORE_PASSWORD: $
       KEY_PASSWORD: $
-      VERSION_NAME: 0
-      VERSION_CODE: 0
+      VERSION_NAME: 2
+      VERSION_CODE: 2
 
     steps:
       - name: Extract commit message

@@ -14,6 +14,6 @@ class MainActivity : AppCompatActivity() {
         val textView = findViewById<TextView>(R.id.textView)
         textView.text = "VERSION_NAME : ${BuildConfig.VERSION_NAME}" +
                 "VERSION_CODE : ${BuildConfig.VERSION_CODE}" +
-                "is DEBUG : ${BuildConfig.DEBUG}"
+                "is DEBUG : ${BuildConfig.DEBUG}"//
     }
 }

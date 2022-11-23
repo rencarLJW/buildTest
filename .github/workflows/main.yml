@@ -25,6 +25,7 @@ jobs:
 
           export VERSION_CODE=$VERSION_INFO | cut -d '_' -f2
           echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
+          
 
       - name: set APK name
         run: |

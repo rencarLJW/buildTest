@@ -17,12 +17,15 @@ jobs:
       - name: Extract commit message
         shell: bash
         run: |
-          export VERSION_INFO=$(echo ${{ github.event.head_commit.message }} | rev | cut -d ' ' -f1 | rev)
-          echo "VERSION_INFO=$VERSION_INFO" >> $GITHUB_ENV
+          export VERSION_INFO=$(echo ${{ github.event.head_commit.message }} | rev)
+          export VERSION_NAME=$(echo $VERSION_INFO | cut -d ' ' -f1 | rev)
+          export VERSION_CODE=$(echo $VERSION_INFO | cut -d ' ' -f2 | rev)
+          echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
+          echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
 
       - name: set APK name
         run: |
-          export TEMP_APK_NAME="caro_version_${VERSION_INFO}.apk"
+          export TEMP_APK_NAME="caro_version_${VERSION_NAME}_${VERSION_CODE}.apk"
           echo "APK_NAME=$TEMP_APK_NAME" >> $GITHUB_ENV
       - uses: actions/checkout@v2
 

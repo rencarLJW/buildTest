@@ -14,21 +14,6 @@ jobs:
       KEY_PASSWORD: $
 
     steps:
-      - name : Retrieve Version
-        run: |
-         echo "::set-output name=VERSION_NAME::$(${{github.workspace}}/gradlew -q printVersionName)"
-        id: android_version
-        
-      - name: Get version
-        run: |
-          echo "version_name=${{steps.android_version.outputs.VERSION_NAME}}" >> $GITHUB_ENV
-    
-      - name: set APK name
-        run: |
-          export TEMP_APK_NAME="caro_version_${{env.version_name}}.apk"
-          echo "APK_NAME=$TEMP_APK_NAME" >> $GITHUB_ENV
-      - uses: actions/checkout@v2
-
       - name: Store Gradle cache
         uses: actions/cache@v2
         with:
@@ -44,7 +29,24 @@ jobs:
         
       - name: Make gradlew executable
         run: chmod +x ./gradlew
-  
+        
+        
+      - name : Retrieve Version
+        run: |
+         echo "::set-output name=VERSION_NAME::$(./gradlew -q printVersionName)"
+        id: android_version
+        
+      - name: Get version
+        run: |
+          echo "version_name=${{steps.android_version.outputs.VERSION_NAME}}" >> $GITHUB_ENV
+    
+      - name: set APK name
+        run: |
+          export TEMP_APK_NAME="caro_version_${{env.version_name}}.apk"
+          echo "APK_NAME=$TEMP_APK_NAME" >> $GITHUB_ENV
+      - uses: actions/checkout@v2
+      
+
       - name: Build with Gradle
         run:
           ./gradlew clean assembleRelease

@@ -19,11 +19,12 @@ jobs:
         run: |
           export VERSION_INFO=$(echo ${{ github.event.head_commit.message }} | rev | cut -d ' ' -f1 | rev)
           echo "VERSION_INFO=$VERSION_INFO" >> $GITHUB_ENV
+          @arr = split(/_/, $VERSION_INFO);
 
-          export VERSION_NAME=$(echo $VERSION_INFO | cut -d '_' -f1)
+          export VERSION_NAME=$(echo $arr[0])
           echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
           
-          export VERSION_CODE=$(echo $VERSION_INFO | cut -d '_' -f2)
+          export VERSION_CODE=$(echo $arr[1])
           echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
 
       - name: set APK name
@@ -31,35 +32,3 @@ jobs:
           export TEMP_APK_NAME="caro_version_${VERSION_INFO}.apk"
           echo "APK_NAME=$TEMP_APK_NAME" >> $GITHUB_ENV
       - uses: actions/checkout@v2
-
-      - name: Store Gradle cache
-        uses: actions/cache@v2
-        with:
-          path: ~/.gradle/caches
-          key: $-gradle-$
-          restore-keys: $-gradle-
-
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v2
-
-      - name: Install NDK
-        run: echo "y" | sudo /usr/local/lib/android/sdk/tools/bin/sdkmanager --install "ndk;20.0.5594570" --sdk_root=${ANDROID_SDK_ROOT}
-        
-      - name: Make gradlew executable
-        run: chmod +x ./gradlew
-  
-      - name: Build with Gradle
-        run:
-          ./gradlew clean assembleRelease
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }} 
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
-          aws-region: ap-northeast-2
-
-      - name: Copy files to S3 with the AWS CLI
-        run: |
-          find . -type f -name "*.apk" -exec cp '{}' $APK_NAME \;
-          aws s3 cp $APK_NAME ${{ secrets.S3_BUCKET_URL }}

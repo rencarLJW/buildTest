@@ -8,10 +8,6 @@ def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
-def yml = rootProject.file(".github/workflows/main.yml")
-def properties = new Properties()
-properties.load(new FileInputStream(yml))
-
 android {
     //
     signingConfigs {
@@ -29,9 +25,9 @@ android {
         applicationId "com.test.buildtest"
         minSdk 23
         targetSdk 32
-        compileSdkVersion 32 //
-        versionCode properties['VERSION_CODE']
-        versionName properties['VERSION_NAME']
+        compileSdkVersion 32
+        versionCode 2
+        versionName "1.1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

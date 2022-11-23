@@ -8,6 +8,30 @@ def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
+static def getMyVersionName() { //
+    File file = new File(".github/workflows/main.yml")
+    String result = ""
+    for (String str : file.readLines()) {
+        if (str.contains("VERSION_NAME")) {
+            result = str.replace("      VERSION_NAME: ", "")
+            break
+        }
+    }
+    return result.trim()
+}
+
+static String getMyVersionCode() { //
+    File file = new File(".github/workflows/main.yml")
+    String result = ""
+    for (String str : file.readLines()) {
+        if (str.contains("VERSION_CODE")) {
+            result = str.replace("      VERSION_CODE: ", "")
+            break
+        }
+    }
+    return result.trim()
+}
+
 android {
     //
     signingConfigs {
@@ -26,8 +50,8 @@ android {
         minSdk 23
         targetSdk 32
         compileSdkVersion 32 //
-        versionCode 1
-        versionName "1.0"
+        versionCode Integer.parseInt(getMyVersionCode())
+        versionName getMyVersionName()
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

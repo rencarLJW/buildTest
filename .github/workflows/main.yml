@@ -19,38 +19,10 @@ jobs:
       S3_URL: "https://buildtest-1122.s3.ap-northeast-2.amazonaws.com"
 
     steps:
-      - name: Set Time Zone
-        run: sudo ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
-
-      - name: Extract branch name
-        shell: bash
+      - name: set APK name
         run: |
-          export BRANCH_RAW=$(echo ${GITHUB_REF#refs/heads/})
-          echo "BRANCH_RAW=$BRANCH_RAW" >> $GITHUB_ENV
-          echo "BRANCH_RAW : $BRANCH_RAW"
-          export BRANCH_PATH_FULL="$(echo $BRANCH_RAW | sed 's/refs\/tags\/buildR\///' | sed 's/\/$//')"
-          echo "BRANCH_PATH_FULL=$BRANCH_PATH_FULL" >> $GITHUB_ENV
-          echo "BRANCH_PATH_FULL : $BRANCH_PATH_FULL"
-          export BRANCH_PATH_WITHOUT_NO_TAIL="$(echo $BRANCH_PATH_FULL | sed 's/\/[0-9]*$//')"
-          echo "BRANCH_PATH_WITHOUT_NO_TAIL=$BRANCH_PATH_WITHOUT_NO_TAIL" >> $GITHUB_ENV
-          echo "BRANCH_PATH_WITHOUT_NO_TAIL : $BRANCH_PATH_WITHOUT_NO_TAIL"
-          export BRANCH_TAG_NO="$(echo $BRANCH_PATH_FULL | sed "s|$BRANCH_PATH_WITHOUT_NO_TAIL||g" | sed 's/\///')"
-          echo "BRANCH_TAG_NO=$BRANCH_TAG_NO" >> $GITHUB_ENV
-          echo "BRANCH_TAG_NO : $BRANCH_TAG_NO"
-          if [ -z "${BRANCH_TAG_NO// }" ]
-          then
-            export BRANCH_PATH_FOR_FILENAME="$(echo $BRANCH_PATH_WITHOUT_NO_TAIL | sed 's/\//-/'  | sed 's/_/-/g')"
-          else
-            export BRANCH_PATH_FOR_FILENAME="$(echo $BRANCH_PATH_WITHOUT_NO_TAIL-$BRANCH_TAG_NO | sed 's/\//-/'  | sed 's/_/-/g')"
-          fi
-          echo "BRANCH_PATH_FOR_FILENAME=$BRANCH_PATH_FOR_FILENAME" >> $GITHUB_ENV
-          echo "BRANCH_PATH_FOR_FILENAME : $BRANCH_PATH_FOR_FILENAME"
-      - name: set APK name and S3 path
-        run: |
-          export TEMP_APK_VERSION_NAME="${GITHUB_REPOSITORY##*/}-$-$-$"
-          export TEMP_APK_NAME="$TEMP_APK_VERSION_NAME-$(date +'%Y-%m-%d-%H:%M:%S').apk"
+          export TEMP_APK_NAME="caro_version_$VERSION_NAME_$VERSION_CODE.apk"
           echo "APK_NAME=$TEMP_APK_NAME" >> $GITHUB_ENV
-          echo "PATH_PREFIX=output/${GITHUB_REPOSITORY##*/}/${BRANCH_PATH_WITHOUT_NO_TAIL}" >> $GITHUB_ENV
       - uses: actions/checkout@v2
 
       - name: Store Gradle cache

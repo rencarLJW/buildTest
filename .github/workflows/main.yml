@@ -14,18 +14,11 @@ jobs:
       KEY_PASSWORD: $
 
     steps:
-      - name: Extract commit message
-        shell: bash
+      - name: Get version
         run: |
-          export VERSION_INFO=$(echo ${{ github.event.head_commit.message }} | rev | cut -d ' ' -f1 | rev)
-          echo "VERSION_INFO=$VERSION_INFO" >> $GITHUB_ENV
-
-          export VERSION_NAME=$(echo $VERSION_INFO | cut -d '_' -f1)
-          echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
-          
-          export VERSION_CODE=INT=$(($(echo $VERSION_INFO | cut -d '_' -f2)))
-          echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
-          
+          echo "VERSION_NAME=${{steps.android_version.outputs.VERSION_NAME}}" >> $GITHUB_ENV
+          echo "VERSION_CODE=${{steps.android_version.outputs.VERSION_CODE}}" >> $GITHUB_ENV
+    
       - name: set APK name
         run: |
           export TEMP_APK_NAME="caro_version_${VERSION_NAME}_${VERSION_CODE}.apk"

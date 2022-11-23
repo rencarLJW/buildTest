@@ -19,13 +19,6 @@ jobs:
         run: |
           export VERSION_INFO=$(echo ${{ github.event.head_commit.message }} | rev | cut -d ' ' -f1 | rev)
           echo "VERSION_INFO=$VERSION_INFO" >> $GITHUB_ENV
-          @arr = split(/_/, $VERSION_INFO);
-
-          export VERSION_NAME=$arr[0]
-          echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
-          
-          export VERSION_CODE=$arr[1]
-          echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
 
       - name: set APK name
         run: |

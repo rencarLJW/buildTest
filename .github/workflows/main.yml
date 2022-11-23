@@ -81,5 +81,6 @@ jobs:
           aws-region: ap-northeast-2
 
       - name: Copy files to S3 with the AWS CLI
-        run:
-          aws s3 cp --region ap-northeast-2 ./app/release/app-release.apk $S3_BUCKET_URL
+        run: |
+          find . -type f -name "*.apk" -exec cp '{}' $ \;
+          aws s3 cp $ $S3_BUCKET_URL

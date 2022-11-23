@@ -15,8 +15,6 @@ jobs:
       VERSION_NAME: 124
       VERSION_CODE: 29
 
-      S3_BUCKET_URL: "s3://buildtest-1122"
-
     steps:
       - name: set APK name
         run: |
@@ -54,4 +52,4 @@ jobs:
       - name: Copy files to S3 with the AWS CLI
         run: |
           find . -type f -name "*.apk" -exec cp '{}' $APK_NAME \;
-          aws s3 cp $APK_NAME $S3_BUCKET_URL
+          aws s3 cp $APK_NAME ${{ secrets.S3_BUCKET_URL }}

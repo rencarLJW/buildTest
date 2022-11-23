@@ -8,6 +8,14 @@ def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
+task printVersionName {
+    println android.defaultConfig.versionName
+}
+
+task printVersionCode {
+    println android.defaultConfig.versionCode
+}
+
 android {
     //
     signingConfigs {
@@ -64,14 +72,14 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 }
 
-task printVersionName {
-    doLast {
-        println android.defaultConfig.versionName
-    }
-}
-
-task printVersionCode {
-    doLast {
-        println android.defaultConfig.versionCode
-    }
-}
+//task printVersionName {
+//    doLast {
+//        println android.defaultConfig.versionName
+//    }
+//}
+//
+//task printVersionCode {
+//    doLast {
+//        println android.defaultConfig.versionCode
+//    }
+//}

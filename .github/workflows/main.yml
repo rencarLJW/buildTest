@@ -19,8 +19,12 @@ jobs:
         run: |
           export VERSION_INFO=$(echo ${{ github.event.head_commit.message }} | rev | cut -d ' ' -f1 | rev)
           echo "VERSION_INFO=$VERSION_INFO" >> $GITHUB_ENV
-          export VERSION_NAME=$VERSION_INFO | cut -d '_' -f1 >> $GITHUB_ENV
-          export VERSION_CODE=$VERSION_INFO | cut -d '_' -f2 >> $GITHUB_ENV
+          
+          export VERSION_NAME=$VERSION_INFO | cut -d '_' -f1
+          echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
+
+          export VERSION_CODE=$VERSION_INFO | cut -d '_' -f2
+          echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
 
       - name: set APK name
         run: |

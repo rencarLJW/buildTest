@@ -14,22 +14,18 @@ jobs:
       KEY_PASSWORD: $
 
     steps:
-      - name : Retrieve Version
+      - name: Extract commit message
+        shell: bash
         run: |
-          echo "::set-output name=VERSION_NAME::$(./gradlew -q printVersionName)"
-        id: android_version
-        
-      - name: Get version
-        run: |
-          echo "version_name=${{steps.android_version.outputs.VERSION_NAME}}" >> $GITHUB_ENV
-    
+          export VERSION_INFO=$(echo ${{ github.event.head_commit.message }} | rev | cut -d ' ' -f1 | rev)
+          echo "VERSION_INFO=$VERSION_INFO" >> $GITHUB_ENV
+
       - name: set APK name
         run: |
-          export TEMP_APK_NAME="caro_version_${{env.version_name}}.apk"
+          export TEMP_APK_NAME="caro_version_$VERSION_INFO.apk"
           echo "APK_NAME=$TEMP_APK_NAME" >> $GITHUB_ENV
       - uses: actions/checkout@v2
-      
-      
+         
       - name: Store Gradle cache
         uses: actions/cache@v2
         with:

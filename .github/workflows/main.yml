@@ -14,6 +14,12 @@ jobs:
       KEY_PASSWORD: $
 
     steps:
+      - name : Retrieve Version
+        run: |
+         echo "::set-output name=VERSION_NAME::$(${{github.workspace}}/gradlew -q printVersionName)"
+         echo "::set-output name=VERSION_CODE::$(${{github.workspace}}/gradlew -q printVersionCode)"
+        id: android_version
+  
       - name: Get version
         run: |
           echo "VERSION_NAME=${{steps.android_version.outputs.VERSION_NAME}}" >> $GITHUB_ENV

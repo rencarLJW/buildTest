@@ -17,17 +17,15 @@ jobs:
       - name : Retrieve Version
         run: |
          echo "::set-output name=VERSION_NAME::$(${{github.workspace}}/gradlew -q printVersionName)"
-         echo "::set-output name=VERSION_CODE::$(${{github.workspace}}/gradlew -q printVersionCode)"
         id: android_version
-  
+        
       - name: Get version
         run: |
-          echo "VERSION_NAME=${{steps.android_version.outputs.VERSION_NAME}}" >> $GITHUB_ENV
-          echo "VERSION_CODE=${{steps.android_version.outputs.VERSION_CODE}}" >> $GITHUB_ENV
+          echo "version_name=${{steps.android_version.outputs.VERSION_NAME}}" >> $GITHUB_ENV
     
       - name: set APK name
         run: |
-          export TEMP_APK_NAME="caro_version_${VERSION_NAME}_${VERSION_CODE}.apk"
+          export TEMP_APK_NAME="caro_version_${{env.version_name}}.apk"
           echo "APK_NAME=$TEMP_APK_NAME" >> $GITHUB_ENV
       - uses: actions/checkout@v2
 

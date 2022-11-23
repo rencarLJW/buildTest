@@ -12,7 +12,7 @@ jobs:
       KEY_ALIAS: $
       KEYSTORE_PASSWORD: $
       KEY_PASSWORD: $
-      VERSION_NAME: 1.2.4
+      VERSION_NAME: 124
       VERSION_CODE: 29
 
       S3_BUCKET_URL: "s3://buildtest-1122"

@@ -82,7 +82,7 @@ jobs:
           SLACK_USERNAME: "incoming-webhook"
           SLACK_CHANNEL: "#caro-monitoring-build-android"
           SLACK_COLOR: "#00BFA5"
-          SLACK_MESSAGE: "commit : $\n<${{ secrets.S3_BUCKET_URL }}${{ env.APK_NAME }}>"
+          SLACK_MESSAGE: "commit : $\n<${{ secrets.S3_URL }}${{ env.APK_NAME }}>"
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
       - name: Slack Notification Finish With Fail

@@ -30,4 +30,4 @@ jobs:
           SLACK_CHANNEL: "#caro-monitoring-build-android"
           SLACK_COLOR: "#CCCCCC"
           SLACK_MESSAGE: "commit : $"
-          SLACK_WEBHOOK: $
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

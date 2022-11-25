@@ -12,8 +12,6 @@ jobs:
       KEY_ALIAS: $
       KEYSTORE_PASSWORD: $
       KEY_PASSWORD: $
-storeFile
-
 
     steps:
       - name: Extract commit message

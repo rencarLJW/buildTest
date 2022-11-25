@@ -78,7 +78,7 @@ jobs:
         if: success()
         env:
           SLACK_ICON_EMOJI: ":pass:"
-          SLACK_TITLE: ":pass: 빌드 성공 / 버전 : $($) / 브랜치 : $"
+          SLACK_TITLE: ":pass: 빌드 성공 / 버전 : ${{ env.VERSION_INFO }}"
           SLACK_USERNAME: "incoming-webhook"
           SLACK_CHANNEL: "#caro-monitoring-build-android"
           SLACK_COLOR: "#00BFA5"
@@ -90,7 +90,7 @@ jobs:
         if: failure()
         env:
           SLACK_ICON_EMOJI: ":nope:"
-          SLACK_TITLE: ":nope: 빌드 실패 / 버전 : $($) / 브랜치 : $"
+          SLACK_TITLE: ":nope: 빌드 실패 / 버전 : ${{ env.VERSION_INFO }}"
           SLACK_USERNAME: "incoming-webhook"
           SLACK_CHANNEL: "#caro-monitoring-build-android"
           SLACK_COLOR: "#FF5252"

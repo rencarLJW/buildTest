@@ -39,7 +39,7 @@ jobs:
           echo "APK_NAME=$TEMP_APK_NAME" >> $GITHUB_ENV
           
           export TEMP_BUNDLE_NAME="caro_version_$VERSION_INFO.aab"
-          echo “BUNDLE_NAME=${{ TEMP_BUNDLE_NAME }}.aab >> $GITHUB_ENV
+          echo "BUNDLE_NAME=$TEMP_BUNDLE_NAME" >> $GITHUB_ENV
 
       - uses: actions/checkout@v2
          

@@ -36,8 +36,8 @@ jobs:
       - name: set APK name
         run: |
           export TEMP_APK_NAME="caro_version_$VERSION_INFO"
-          echo "APK_NAME=${{“ TEMP_APK_NAME }}.apk >> $GITHUB_ENV
-          echo “BUNDLE_NAME=${{“ TEMP_APK_NAME }}.aab >> $GITHUB_ENV
+          echo "APK_NAME=${{ TEMP_APK_NAME }}.apk >> $GITHUB_ENV
+          echo “BUNDLE_NAME=${{ TEMP_APK_NAME }}.aab >> $GITHUB_ENV
 
       - uses: actions/checkout@v2
          

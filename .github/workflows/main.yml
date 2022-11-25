@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Extract Android signing key from env
         run: |
-          echo "${{ secrets.RELEASE_KEYSTORE }}" > key.base64
-          base64 -d key.base64 > key
+          echo "${{ secrets.RELEASE_KEYSTORE }}" > app/key.base64
+          base64 -d app/key.base64 > app/key
           ls
           pwd

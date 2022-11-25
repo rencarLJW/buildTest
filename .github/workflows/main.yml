@@ -64,6 +64,10 @@ jobs:
       - name: Build with Gradle, APK
         run:
           ./gradlew clean assembleRelease
+          
+      - name: Build with Gradle, Bundle
+        run:
+          ./gradlew bundleRelease
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -77,11 +81,19 @@ jobs:
         run: |
           find . -type f -name "*.apk"
           
+      - name: find apk
+        run: |
+          find . -type f -name "*.aab"
+          
       - name: Copy files to S3 with the AWS CLI (APK)
         run: |
           find . -type f -name "*.apk" -exec cp '{}' $APK_NAME \;
           aws s3 cp $APK_NAME ${{ secrets.S3_BUCKET_URL }}
         
+      - name: Copy files to S3 with the AWS CLI (BUNDLE)
+        run: |
+          find . -type f -name "*.aab" -exec cp '{}' $BUNDLE_NAME \;
+          aws s3 cp $BUNDLE_NAME ${{ secrets.S3_BUCKET_URL }}
           
           
       - name: Slack Notification Finish With Success
@@ -89,11 +101,11 @@ jobs:
         if: success()
         env:
           SLACK_ICON_EMOJI: ":bellhop_bell:"
-          SLACK_TITLE: ":bellhop_bell: 빌드 성공 / 버전 : $($) / 브랜치 : $"
+          SLACK_TITLE: ":bellhop_bell: 빌드 성공 / 버전 : ${{ env.VERSION_INFO }}"
           SLACK_USERNAME: "incoming-webhook"
           SLACK_CHANNEL: "#caro-monitoring-build-android"
           SLACK_COLOR: "#00BFA5"
-          SLACK_MESSAGE: "commit : $\n<${{ secrets.S3_URL }}${{ env.APK_NAME }}>"
+          SLACK_MESSAGE: "빌드 성공\n<${{ secrets.S3_URL }}${{ env.APK_NAME }}>"
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
       - name: Slack Notification Finish With Fail
@@ -101,9 +113,9 @@ jobs:
         if: failure()
         env:
           SLACK_ICON_EMOJI: ":bellhop_bell:"
-          SLACK_TITLE: ":bellhop_bell: 빌드 실패 / 버전 : $($) / 브랜치 : $"
+          SLACK_TITLE: ":bellhop_bell: 빌드 실패 / 버전 : ${{ env.VERSION_INFO }}"
           SLACK_USERNAME: "incoming-webhook"
           SLACK_CHANNEL: "#caro-monitoring-build-android"
           SLACK_COLOR: "#FF5252"
-          SLACK_MESSAGE: "commit : ${{ github.event.head_commit.message }}"
+          SLACK_MESSAGE: "빌드 실패 / commit : ${{ github.event.head_commit.message }}"
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

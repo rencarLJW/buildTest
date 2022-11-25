@@ -83,7 +83,7 @@ jobs:
 
       - name: Copy files to S3 with the AWS CLI (APK)
         run: |
-          ls
+          cd app/release | ls
           aws s3 cp app-release.apk ${{ secrets.S3_BUCKET_URL }}
 
 

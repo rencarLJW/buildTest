@@ -67,10 +67,9 @@ jobs:
 
       - name: Copy files to S3 with the AWS CLI (APK)
         run: |
-          find . -type f -name "*.apk" -exec cp '{}' $APK_NAME \;
-          aws s3 cp $APK_NAME ${{ secrets.S3_BUCKET_URL }}
+          find . -type f -name "*.apk" | xargs cp -t \
+          ls
+          pwd
 
 
-      - name: ls
-        run: ls
 

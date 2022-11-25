@@ -83,11 +83,7 @@ jobs:
 
       - name: Copy files to S3 with the AWS CLI (APK)
         run: |
-          aws s3 cp ./app/release/app-release.apk ${{ secrets.S3_BUCKET_URL }}
-
-      - name: Copy files to S3 with the AWS CLI (BUNDLE)
-        run: |
-          aws s3 cp ./app/release/app-release.aab ${{ secrets.S3_BUCKET_URL }}
+          aws s3 cp android/app/build/outputs/apk/app-release.apk ${{ secrets.S3_BUCKET_URL }}
 
 
       - name: Slack Notification Finish With Success

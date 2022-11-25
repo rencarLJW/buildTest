@@ -81,10 +81,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
           aws-region: ap-northeast-2
 
-      - name: Copy files to S3 with the AWS CLI (APK)
-        run: |
-          aws s3 cp /app/build/outputs/apk/app-release.apk ${{ secrets.S3_BUCKET_URL }}
-
+      - name: Upload release bundle
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-release
+          path: android/app/build/outputs/bundle/release/app-release.apk
+          retention-days: 60
 
       - name: Slack Notification Finish With Success
         uses: rtCamp/action-slack-notify@v2

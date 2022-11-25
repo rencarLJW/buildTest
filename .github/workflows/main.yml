@@ -65,6 +65,10 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
+      - name: Build with Gradle, APK
+        run:
+          ./gradlew clean assembleRelease
+          
       - name: Copy files to S3 with the AWS CLI (APK)
         run: |
           find . -type f -name "*.apk"

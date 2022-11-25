@@ -67,7 +67,9 @@ jobs:
 
       - name: Build with Gradle, APK
         run:
-          cd android && ./gradlew clean assembleRelease
+          ./gradlew clean assembleRelease
+          pwd
+          ls
 
       - name: Build with Gradle, Bundle
         run:

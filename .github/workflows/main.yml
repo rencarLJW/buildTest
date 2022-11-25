@@ -17,3 +17,4 @@ jobs:
       - name: Extract Android signing key from env
         run: |
           pwd
+          ls

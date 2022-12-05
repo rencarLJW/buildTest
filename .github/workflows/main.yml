@@ -19,6 +19,12 @@ jobs:
           export VERSION_INFO=$(echo ${{ github.event.head_commit.message }} | rev | cut -d ' ' -f1 | rev)
           echo "VERSION_INFO=$VERSION_INFO" >> $GITHUB_ENV
 
+      - name: set APK name
+        run: |
+          export TEMP_APK_NAME="caro_version_$VERSION_INFO.apk"
+          echo "APK_NAME=$TEMP_APK_NAME" >> $GITHUB_ENV
+      - uses: actions/checkout@v2
+
       - name: Store Gradle cache
         uses: actions/cache@v2
         with:
@@ -35,11 +41,6 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
-      - name: Instrumentation Tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 31
-          target: default
-          arch: x86_64
-          profile: Nexus 6
-          script: ./gradlew connectedCheck --stacktrace
+      - name: Build with Gradle, APK
+        run:
+          ./gradlew clean assembleRelease

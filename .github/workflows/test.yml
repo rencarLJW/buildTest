@@ -7,7 +7,7 @@ on:
 jobs:
   tests:
     name: Run Tests
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v1
@@ -16,12 +16,10 @@ jobs:
         with:
           java-version: 11
 
-      - name: Run Unit tests
-        run: bash ./gradlew test --stacktrace
-
       - name: Run UI Tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 29
           profile: Nexus 6
+          disable-animation: false
           script: ./gradlew connectedCheck

@@ -46,6 +46,6 @@ jobs:
         with:
           api-level: 31
           target: default
-          arch: x86-64
+          arch: x86_64
           profile: Nexus 6
           script: ./gradlew connectedCheck --stacktrace

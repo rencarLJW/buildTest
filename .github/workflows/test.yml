@@ -19,7 +19,7 @@ jobs:
       - name: Run UI Tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          working-directory: platform/android
           arch: 'x86_64'
           api-level: 30
+          profile: Nexus 6
           script: ./gradlew connectedAndroidTest

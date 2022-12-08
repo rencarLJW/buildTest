@@ -10,12 +10,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Extract commit message
+        shell: bash
+        run: |
+          export VERSION_INFO=$(echo ${{ github.event.head_commit.message }} | rev | cut -d ' ' -f1 | rev)
+          echo "VERSION_INFO=$VERSION_INFO" >> $GITHUB_ENV
+
       - name: Store Gradle cache
         uses: actions/cache@v2
         with:
           path: ~/.gradle/caches
           key: $-gradle-$
           restore-keys: $-gradle-
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
 
       - name: Make gradlew executable
         run: chmod +x ./gradlew

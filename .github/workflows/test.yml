@@ -10,6 +10,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Store Gradle cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: $-gradle-$
+          restore-keys: $-gradle-
+
       #      - name: Store Gradle cache
       #        uses: actions/cache@v2
       #        with:
